@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.exception; // added to fix issue
+package ru.practicum.explorewithme.exception; // added to fix issue 3
 
 public class ErrorResponse {
     private String message;
