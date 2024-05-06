@@ -10,7 +10,6 @@
     </parent>
 
     <artifactId>stats-service</artifactId>
-    <packaging>jar</packaging>
 
     <dependencies>
 
