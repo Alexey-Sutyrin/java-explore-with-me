@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.stats.service;
+package ru.practicum.explorewithme.stats.service; //2 stage-added
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,12 +9,13 @@ import ru.practicum.explorewithme.StatisticViewDto;
 import ru.practicum.explorewithme.stats.exception.StatisticValidationException;
 import ru.practicum.explorewithme.stats.model.StatisticMapper;
 import ru.practicum.explorewithme.stats.repository.StatisticRepository;
-import ru.practicum.explorewithme.stats.constant.Constant;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+
+import static ru.practicum.explorewithme.stats.constant.Constant.TIME_FORMAT;
 
 @Slf4j
 @Service
@@ -57,7 +58,7 @@ public class StatisticServiceImpl implements StatisticService {
 
     private LocalDateTime parseTimeParam(String time) {
         try {
-            return LocalDateTime.parse(time, DateTimeFormatter.ofPattern(Constant.TIME_FORMAT));
+            return LocalDateTime.parse(time, DateTimeFormatter.ofPattern(TIME_FORMAT));
         } catch (DateTimeParseException e) {
             throw new StatisticValidationException("Передан некорректный формат времени");
         }

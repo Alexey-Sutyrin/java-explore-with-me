@@ -10,7 +10,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ru.practicum.explorewithme.stats.exception.ErrorResponse handleStatisticValidationException(StatisticValidationException e) {
-        return new ru.practicum.explorewithme.stats.exception.ErrorResponse("Validation for statistic failed: " + e.getMessage());
+    public ErrorResponse handleStatisticValidationException(StatisticValidationException e) {
+        return new ErrorResponse("Validation for statistic failed: " + e.getMessage());
     }
 }
