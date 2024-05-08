@@ -9,13 +9,12 @@ import ru.practicum.explorewithme.StatisticViewDto;
 import ru.practicum.explorewithme.stats.exception.StatisticValidationException;
 import ru.practicum.explorewithme.stats.model.StatisticMapper;
 import ru.practicum.explorewithme.stats.repository.StatisticRepository;
+import ru.practicum.explorewithme.stats.constant.Constant;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-
-import static ru.practicum.explorewithme.stats.constant.Constant.TIME_FORMAT;
 
 @Slf4j
 @Service
@@ -38,6 +37,9 @@ public class StatisticServiceImpl implements StatisticService {
         LocalDateTime endTime = parseTimeParam(end);
         List<StatisticViewDto> dtos;
 
+        if (startTime.isAfter(endTime)) {
+            throw new StatisticValidationException("Начало временного промежутка не может быть позже конца");
+        }
         if (uris != null) {
             if (unique) {
                 dtos = statisticRepository.findAllStatisticsByTimeAndListOfUrisAndUniqueIp(startTime, endTime, uris);
@@ -55,7 +57,7 @@ public class StatisticServiceImpl implements StatisticService {
 
     private LocalDateTime parseTimeParam(String time) {
         try {
-            return LocalDateTime.parse(time, DateTimeFormatter.ofPattern(TIME_FORMAT));
+            return LocalDateTime.parse(time, DateTimeFormatter.ofPattern(Constant.TIME_FORMAT));
         } catch (DateTimeParseException e) {
             throw new StatisticValidationException("Передан некорректный формат времени");
         }
