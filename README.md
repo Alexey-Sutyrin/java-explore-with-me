@@ -1,4 +1,4 @@
 # java-explore-with-me
 Template repository for ExploreWithMe project.
 
-Stage 1 - ewm-stats-service
+Stage 2 - main-svc-service - restart
