@@ -10,12 +10,11 @@
     </parent>
 
     <artifactId>statistics</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>stats-client</module>
         <module>stats-service</module>
         <module>stats-dtos</module>
-        <module>stats-client</module>
     </modules>
 
     <properties>
