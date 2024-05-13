@@ -56,4 +56,3 @@
   CONSTRAINT compilation_events_pk PRIMARY KEY (compilation_id, event_id),
   CONSTRAINT fk_comp_events_to_comps FOREIGN KEY(compilation_id) REFERENCES compilations(id),
   CONSTRAINT fk_comp_events_to_events FOREIGN KEY(event_id) REFERENCES events(id));
-
