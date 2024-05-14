@@ -71,6 +71,8 @@ public class EventServiceImpl implements EventService {
         Category category = categoryService.findCategory(newEventDto.getCategory());
         Event event = EventMapper.toNewEvent(newEventDto, user, category);
         validateEventTimeByUser(event.getEventDate());
+        validateDescription(event.getDescription());
+        validateAnnotation(event.getAnnotation());
         event = eventRepository.save(event);
         EventFullDto dto = EventMapper.toEventFullDto(event);
         dto.setViews(0L);
@@ -124,6 +126,7 @@ public class EventServiceImpl implements EventService {
             oldEvent.setIsPaid(eventUpdate.getPaid());
         }
         if (eventUpdate.getParticipantLimit() != null) {
+            validateLimit(eventUpdate.getParticipantLimit());
             oldEvent.setParticipantLimit(eventUpdate.getParticipantLimit());
         }
         if (eventUpdate.getRequestModeration() != null) {
@@ -388,6 +391,25 @@ public class EventServiceImpl implements EventService {
         if (eventTime.isBefore(LocalDateTime.now().plusHours(2))) {
             throw new InvalidRequestException("Дата и время на которые намечено событие не может быть " +
                     "раньше, чем через два часа");
+        }
+    }
+
+    //Доделать проверку описания
+    private void validateDescription(String description) {
+        if (description.trim().length() == 0) {
+            throw new DataValidationException("Описание не должно быть пустым");
+        }
+    }
+
+    private void validateAnnotation(String annotation) {
+        if (annotation.trim().length() == 0) {
+            throw new DataValidationException("Аннотация не должна быть пустой");
+        }
+    }
+
+    private void validateLimit(Integer limit) {
+        if (limit < 0) {
+            throw new DataValidationException("Лимит участников не может быть отрицательным");
         }
     }
 
