@@ -37,8 +37,8 @@ public class CategoryController {
 
     //Public part
     @GetMapping("/categories")
-    public List<CategoryDto> findCategories(@RequestParam(required = false, defaultValue = "0") Integer from,
-                                            @RequestParam(required = false, defaultValue = "10") Integer size) {
+    public List<CategoryDto> findCategories(@RequestParam(defaultValue = "0") Integer from,
+                                            @RequestParam(defaultValue = "10") Integer size) {
         return categoryService.findCategories(from, size);
     }
 

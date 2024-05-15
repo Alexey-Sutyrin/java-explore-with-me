@@ -11,9 +11,6 @@
 
     <artifactId>stats-dtos</artifactId>
 
-    <properties>
-    </properties>
-
     <dependencies>
 
         <dependency>

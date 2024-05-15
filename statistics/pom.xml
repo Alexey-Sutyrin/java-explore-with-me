@@ -17,9 +17,6 @@
         <module>stats-dtos</module>
     </modules>
 
-    <properties>
-    </properties>
-
     <dependencies>
 
         <dependency>
