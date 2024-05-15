@@ -1,17 +1,23 @@
-package ru.practicum.explorewithme.category.dto;
+package ru.practicum.explorewithme.category.dto; //заменена аннотация data на аннотяцию equals и др
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+@ToString
 public class CategoryDto {
 
     private Long id;
