@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.category.dto;
+package ru.practicum.explorewithme.category.dto; //цикл for заменен на stream().map()
 
 import ru.practicum.explorewithme.category.model.Category;
 
