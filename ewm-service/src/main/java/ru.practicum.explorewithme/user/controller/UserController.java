@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.user.controller; //Admin endpoints
+package ru.practicum.explorewithme.user.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.explorewithme.user.dto.UserInDto;
 import ru.practicum.explorewithme.user.dto.UserOutDto;
+import ru.practicum.explorewithme.user.dto.UserWithFollowersDto;
 import ru.practicum.explorewithme.user.service.UserService;
 
 import javax.validation.Valid;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/users")
-public class AdminUserController {
+public class UserController {
 
     private final UserService userService;
 
@@ -39,5 +40,17 @@ public class AdminUserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserOutDto addUser(@Valid @RequestBody UserInDto inDto) {
         return userService.addUser(inDto);
+    }
+
+    @PostMapping(value = "/users/{userId}/followers/{followerId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserWithFollowersDto addFollower(@PathVariable Long userId, @PathVariable Long followerId) {
+        return userService.addFollower(userId, followerId);
+    }
+
+    @DeleteMapping(value = "/users/{userId}/followers/{followerId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteFollower(@PathVariable Long userId, @PathVariable Long followerId) {
+        userService.deleteFollower(userId, followerId);
     }
 }
