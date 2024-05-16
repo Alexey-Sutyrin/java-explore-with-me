@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
@@ -139,6 +140,17 @@ public class ErrorHandler {
                 Collections.singletonList(stackTrace), LocalDateTime.now());
     }
 
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleConstraintViolationException(ConstraintViolationException e) {
+        log.error("Некорректный параметр запроса");
+        StringWriter out = new StringWriter();
+        e.printStackTrace(new PrintWriter(out));
+        String stackTrace = out.toString();
+        return new ApiError(HttpStatus.BAD_REQUEST, "Некорректный параметр запроса", e.getMessage(),
+                Collections.singletonList(stackTrace), LocalDateTime.now());
+    }
+    //3 stage - finish
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiError handleUnknownException(Throwable e) {

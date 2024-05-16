@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.user.controller;
+package ru.practicum.explorewithme.user.controller; //Admin endpoints
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,24 +18,24 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/users")
-public class UserController {
+public class AdminUserController {
 
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping("/admin/users")
     public List<UserOutDto> findUsers(@RequestParam(required = false) List<Long> ids,
                                       @PositiveOrZero @RequestParam(required = false, defaultValue = "0") Integer from,
                                       @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
         return userService.findUsers(ids, from, size);
     }
 
-    @DeleteMapping(value = "/{userId}")
+    @DeleteMapping(value = "/admin/users/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@NotNull @PathVariable Long userId) {
         userService.deleteUser(userId);
     }
 
-    @PostMapping
+    @PostMapping(value = "/admin/users")
     @ResponseStatus(HttpStatus.CREATED)
     public UserOutDto addUser(@Valid @RequestBody UserInDto inDto) {
         return userService.addUser(inDto);
