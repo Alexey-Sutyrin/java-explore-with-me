@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.explorewithme.StatisticClient;
 import ru.practicum.explorewithme.event.dto.*;
 import ru.practicum.explorewithme.event.service.EventService;
+import ru.practicum.explorewithme.request.dto.EventRequestStatusUpdateRequest;
+import ru.practicum.explorewithme.request.dto.EventRequestStatusUpdateResult;
+import ru.practicum.explorewithme.request.dto.ParticipationRequestDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @Validated
@@ -43,4 +48,32 @@ public class PrivateEventController {
                                         @Valid @RequestBody UpdateEventUserRequest updateEventUserRequest) {
         return eventService.userUpdateEvent(userId, eventId, updateEventUserRequest);
     }
+    @GetMapping("/users/{userId}/events/{eventId}/requests")
+    public List<ParticipationRequestDto> findUserEventRequests(@PathVariable Long userId, @PathVariable Long eventId) {
+        return eventService.findUserEventRequests(userId, eventId);
+    }
+
+    @PatchMapping(value = "/users/{userId}/events/{eventId}/requests")
+    public EventRequestStatusUpdateResult changeEventRequestsStatus(@PathVariable Long userId,
+                                                                    @PathVariable Long eventId,
+                                                                    @Valid @RequestBody EventRequestStatusUpdateRequest updateRequest) {
+        return eventService.changeEventRequestsStatus(userId, eventId, updateRequest);
+    }
+
+    @GetMapping("/users/{userId}/followers/{followerId}/events")
+    public List<EventFullDto> findEventsBySubscriptionOfUser(@PathVariable Long userId,
+                                                             @PathVariable Long followerId,
+                                                             @PositiveOrZero @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                             @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
+        return eventService.findEventsBySubscriptionOfUser(userId, followerId, from, size);
+    }
+
+    @GetMapping("/users/followers/{followerId}/events")
+    public List<EventShortDto> findEventsByAllSubscriptions(@PathVariable Long followerId,
+                                                            @RequestParam(required = false, defaultValue = "NEW") String sort,
+                                                            @PositiveOrZero @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                            @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
+        return eventService.findEventsByAllSubscriptions(followerId, sort, from, size);
+    }
+
 }

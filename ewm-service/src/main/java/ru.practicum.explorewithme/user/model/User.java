@@ -20,7 +20,6 @@ public class User {
     private Long id;
     private String email;
     private String name;
-
     @ToString.Exclude
     @ManyToMany
     @JoinTable(name = "user_followers",
