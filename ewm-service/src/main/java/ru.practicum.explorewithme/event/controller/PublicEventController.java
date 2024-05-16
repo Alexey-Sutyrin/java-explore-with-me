@@ -71,7 +71,6 @@ public class PublicEventController {
         return eventService.changeEventRequestsStatus(userId, eventId, updateRequest);
     }
 
-    // 3 stage - add
     @GetMapping("/users/{userId}/followers/{followerId}/events")
     public List<EventFullDto> findEventsBySubscriptionOfUser(@PathVariable Long userId,
                                                              @PathVariable Long followerId,

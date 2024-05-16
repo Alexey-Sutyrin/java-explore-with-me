@@ -150,7 +150,7 @@ public class ErrorHandler {
         return new ApiError(HttpStatus.BAD_REQUEST, "Некорректный параметр запроса", e.getMessage(),
                 Collections.singletonList(stackTrace), LocalDateTime.now());
     }
-    //3 stage - finish
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiError handleUnknownException(Throwable e) {
