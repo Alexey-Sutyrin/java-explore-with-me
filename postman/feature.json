@@ -114,7 +114,7 @@
       "response": []
     },
     {
-      "name": "Add follower fail already subscribed",
+      "name": "Add follower fail already subsribed",
       "event": [
         {
           "listen": "test",
@@ -159,7 +159,7 @@
       "response": []
     },
     {
-      "name": "get user feed standard parameters successful",
+      "name": "get user feed standart params successful",
       "event": [
         {
           "listen": "test",
@@ -390,7 +390,7 @@
       "response": []
     },
     {
-      "name": "get all feed successful",
+      "name": "get all feed succesful",
       "event": [
         {
           "listen": "test",

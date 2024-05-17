@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.user.dto; //3 stage - new file
+package ru.practicum.explorewithme.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

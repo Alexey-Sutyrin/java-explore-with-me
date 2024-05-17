@@ -1,9 +1,9 @@
-package ru.practicum.explorewithme.category.dto; //цикл заменен
+package ru.practicum.explorewithme.category.dto;
 
 import ru.practicum.explorewithme.category.model.Category;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CategoryMapper {
 
@@ -21,8 +21,10 @@ public class CategoryMapper {
     }
 
     public static List<CategoryDto> toDtos(List<Category> categories) {
-        return categories.stream()
-                .map(CategoryMapper::toCategoryDto)
-                .collect(Collectors.toList());
+        List<CategoryDto> dtos = new ArrayList<>();
+        for (Category category : categories) {
+            dtos.add(toCategoryDto(category));
+        }
+        return dtos;
     }
 }

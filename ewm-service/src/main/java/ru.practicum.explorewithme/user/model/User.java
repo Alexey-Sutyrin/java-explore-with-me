@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.user.model; //3 stage - add
+package ru.practicum.explorewithme.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
