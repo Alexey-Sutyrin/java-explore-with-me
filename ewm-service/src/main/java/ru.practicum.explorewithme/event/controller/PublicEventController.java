@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event.controller;
+package ru.practicum.explorewithme.event.controller; //Public endpoints
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

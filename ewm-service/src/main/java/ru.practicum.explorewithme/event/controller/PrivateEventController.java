@@ -48,6 +48,7 @@ public class PrivateEventController {
                                         @Valid @RequestBody UpdateEventUserRequest updateEventUserRequest) {
         return eventService.userUpdateEvent(userId, eventId, updateEventUserRequest);
     }
+
     @GetMapping("/users/{userId}/events/{eventId}/requests")
     public List<ParticipationRequestDto> findUserEventRequests(@PathVariable Long userId, @PathVariable Long eventId) {
         return eventService.findUserEventRequests(userId, eventId);
@@ -75,5 +76,4 @@ public class PrivateEventController {
                                                             @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
         return eventService.findEventsByAllSubscriptions(followerId, sort, from, size);
     }
-
 }
