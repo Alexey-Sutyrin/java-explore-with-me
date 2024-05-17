@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event.service;
+package ru.practicum.explorewithme.event.service; //Доделать проверку описания
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -429,6 +429,24 @@ public class EventServiceImpl implements EventService {
         if (eventTime.isBefore(LocalDateTime.now().plusHours(2))) {
             throw new InvalidRequestException("Дата и время на которые намечено событие не может быть " +
                     "раньше, чем через два часа");
+        }
+    }
+
+    private void validateDescription(String description) {
+        if (description.trim().length() == 0) {
+            throw new DataValidationException("Описание не должно быть пустым");
+        }
+    }
+
+    private void validateAnnotation(String annotation) {
+        if (annotation.trim().length() == 0) {
+            throw new DataValidationException("Аннотация не должна быть пустой");
+        }
+    }
+
+    private void validateLimit(Integer limit) {
+        if (limit < 0) {
+            throw new DataValidationException("Лимит участников не может быть отрицательным");
         }
     }
 
