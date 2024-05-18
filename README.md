@@ -1,6 +1,6 @@
 # java-explore-with-me
 Template repository for ExploreWithMe project.
-Stage 3 - feature_location processing addition
+Stage 3 - feature_location_processing addition
 
 Приложение Explore with Me — Aфиша. В этой афише можно предложить какое-либо событие -
 от выставки до похода в кино, и собрать компанию для участия в нём.
