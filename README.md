@@ -1,5 +1,18 @@
 # java-explore-with-me
 Template repository for ExploreWithMe project.
+Stage 3 - feature_location processing addition
 
-Stage 2 - ewm-stats-service addition - main_svc addition
-----Correction after review - 8 of 10 checkpoints
+Приложение Explore with Me — Aфиша. В этой афише можно предложить какое-либо событие -
+от выставки до похода в кино, и собрать компанию для участия в нём.
+
+---
+## Приложение состоит из двух сервисов
+1. Сервис основной (ewm-service) - будет содержать всё необходимое для работы продукта.
+2. Сервис статистики (statistics) - будет хранить количество просмотров и позволит делать различные выборки для анализа работы приложения.
+
+---
+## Feature - location processing
+
+Ссылка на пулл-реквест:
+
+---
