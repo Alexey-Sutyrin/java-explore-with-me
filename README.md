@@ -14,5 +14,4 @@ Stage 3 - feature_location_processing addition
 ## Feature - location processing
 
 Ссылка на пулл-реквест:
-
 ---
