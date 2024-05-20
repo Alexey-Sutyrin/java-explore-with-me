@@ -44,3 +44,4 @@ public class PrivateEventController {
         return eventService.userUpdateEvent(userId, eventId, updateEventUserRequest);
     }
 }
+

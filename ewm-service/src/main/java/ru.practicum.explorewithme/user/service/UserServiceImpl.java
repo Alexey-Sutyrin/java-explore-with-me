@@ -61,3 +61,4 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException("Пользователь с id" + userId + "не найден"));
     }
 }
+

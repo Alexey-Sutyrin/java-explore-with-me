@@ -35,3 +35,4 @@ public class UserMapper {
         return new UserShortDto(user.getId(), user.getName());
     }
 }
+
