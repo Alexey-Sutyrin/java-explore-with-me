@@ -1,15 +1,25 @@
-package ru.practicum.explorewithme.event.controller; //Private endpoints
+package ru.practicum.explorewithme.event.controller; //Private endpoints + 3 stage
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.explorewithme.StatisticClient;
+import ru.practicum.explorewithme.StatisticInDto;
 import ru.practicum.explorewithme.event.dto.*;
 import ru.practicum.explorewithme.event.service.EventService;
-
+import ru.practicum.explorewithme.request.dto.EventRequestStatusUpdateRequest;
+import ru.practicum.explorewithme.request.dto.EventRequestStatusUpdateResult;
+import ru.practicum.explorewithme.request.dto.ParticipationRequestDto;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 import java.util.List;
+import static ru.practicum.explorewithme.constant.Constant.SERVICE_ID;
+import static ru.practicum.explorewithme.constant.Constant.TIME_FORMAT;
 
 @Validated
 @RestController
@@ -21,7 +31,8 @@ public class PrivateEventController {
 
     @PostMapping(value = "/users/{userId}/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventFullDto addEvent(@PathVariable Long userId, @Valid @RequestBody NewEventDto newEventDto) {
+    public EventFullDto addEvent(@PathVariable Long userId,
+                                 @Valid @RequestBody NewEventDto newEventDto) {
         return eventService.addEvent(userId, newEventDto);
     }
 
@@ -42,5 +53,21 @@ public class PrivateEventController {
                                         @PathVariable Long eventId,
                                         @Valid @RequestBody UpdateEventUserRequest updateEventUserRequest) {
         return eventService.userUpdateEvent(userId, eventId, updateEventUserRequest);
+    }
+
+    @GetMapping("/users/{userId}/followers/{followerId}/events")
+    public List<EventFullDto> findEventsBySubscriptionOfUser(@PathVariable Long userId,
+                                                             @PathVariable Long followerId,
+                                                             @PositiveOrZero @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                             @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
+        return eventService.findEventsBySubscriptionOfUser(userId, followerId, from, size);
+    }
+
+    @GetMapping("/users/followers/{followerId}/events")
+    public List<EventShortDto> findEventsByAllSubscriptions(@PathVariable Long followerId,
+                                                            @RequestParam(required = false, defaultValue = "NEW") String sort,
+                                                            @PositiveOrZero @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                            @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
+        return eventService.findEventsByAllSubscriptions(followerId, sort, from, size);
     }
 }
