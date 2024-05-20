@@ -1,12 +1,10 @@
-package ru.practicum.explorewithme.user.model; //3 stage - add followers database + schema-sql update
+package ru.practicum.explorewithme.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -20,13 +18,4 @@ public class User {
     private Long id;
     private String email;
     private String name;
-    @ToString.Exclude
-    @ManyToMany
-    @JoinTable(name = "user_followers",
-               joinColumns = @JoinColumn(name = "follower_id"),
-               inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> followers;
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "followers")
-    private List<User> followees;
 }

@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.user.dto; //3 stage
+package ru.practicum.explorewithme.user.dto;
 
 import ru.practicum.explorewithme.user.model.User;
 
@@ -33,14 +33,5 @@ public class UserMapper {
 
     public static UserShortDto toUserShortDto(User user) {
         return new UserShortDto(user.getId(), user.getName());
-    }
-
-    public static UserWithFollowersDto toDtoWithFollowers(User user) {
-        return UserWithFollowersDto.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .followers(toOutDtos(user.getFollowers()))
-                .build();
     }
 }
