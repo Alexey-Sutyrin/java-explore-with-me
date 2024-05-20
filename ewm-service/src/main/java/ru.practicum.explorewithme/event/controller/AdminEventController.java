@@ -40,4 +40,3 @@ public class AdminEventController {
         return eventService.adminUpdateEvent(eventId, updateRequest);
     }
 }
-
