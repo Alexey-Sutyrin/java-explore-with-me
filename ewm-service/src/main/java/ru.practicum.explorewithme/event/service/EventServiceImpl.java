@@ -354,7 +354,6 @@ public class EventServiceImpl implements EventService {
     public List<Event> findAllByIds(List<Long> ids) {
         return eventRepository.findAllByIdIn(ids);
     }
-    
     @Override
     public List<EventFullDto> findEventsBySubscriptionOfUser(Long userId, Long followerId, Integer from, Integer size) {
         Map<Long, Long> views;
