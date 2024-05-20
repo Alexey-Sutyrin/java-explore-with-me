@@ -69,3 +69,4 @@ public class PublicEventController {
         return eventService.changeEventRequestsStatus(userId, eventId, updateRequest);
     }
 }
+
