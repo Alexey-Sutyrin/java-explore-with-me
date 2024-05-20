@@ -19,5 +19,5 @@ Stage 3 - feature_subscriptions addition
 4. Пользователь может удалить своего подписчика.
 
 Ссылка на пулл-реквест:
-https://github.com/Alexey-Sutyrin/java-explore-with-me/pull/9
+https://github.com/Alexey-Sutyrin/java-explore-with-me/pull/12
 ---
