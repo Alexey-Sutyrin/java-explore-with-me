@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event.model;
+package ru.practicum.explorewithme.event.model; //a-Data to fix
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

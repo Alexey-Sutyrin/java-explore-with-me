@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.user.model; //3
+package ru.practicum.explorewithme.user.model; //3 - a-Data to fix
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

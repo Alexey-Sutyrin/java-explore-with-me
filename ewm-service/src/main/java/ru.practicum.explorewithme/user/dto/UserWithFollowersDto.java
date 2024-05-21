@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.user.dto; //3 stage - new
+package ru.practicum.explorewithme.user.dto; //3 stage - new - a-Data to fix
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

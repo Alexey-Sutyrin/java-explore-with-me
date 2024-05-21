@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.exception;
+package ru.practicum.explorewithme.exception; //a-Data to fix
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

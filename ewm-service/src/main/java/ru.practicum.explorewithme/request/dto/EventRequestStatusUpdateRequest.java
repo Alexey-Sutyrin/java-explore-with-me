@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.request.dto;
+package ru.practicum.explorewithme.request.dto; //a-Data to fix
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

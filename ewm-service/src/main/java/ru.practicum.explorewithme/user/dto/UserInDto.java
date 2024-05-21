@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.user.dto; //NotEmpty - deleted
+package ru.practicum.explorewithme.user.dto; //NotEmpty - deleted - a-Data to fix
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.request.model;
+package ru.practicum.explorewithme.request.model; //a-Data to fix
 
 import lombok.*;
 import ru.practicum.explorewithme.event.model.Event;
