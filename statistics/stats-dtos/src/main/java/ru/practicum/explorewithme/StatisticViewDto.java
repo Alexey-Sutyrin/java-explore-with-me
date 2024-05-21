@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme;
+package ru.practicum.explorewithme; //a-Data to fix
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
