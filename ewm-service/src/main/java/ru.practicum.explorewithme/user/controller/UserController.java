@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.user.controller; //3
+package ru.practicum.explorewithme.user.controller; //3 - defaultValue fixed
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class UserController {
     //Admin endpoints
     @GetMapping("/admin/users")
     public List<UserOutDto> findUsers(@RequestParam(required = false) List<Long> ids,
-                                      @PositiveOrZero @RequestParam(required = false, defaultValue = "0") Integer from,
+                                      @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                       @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
         return userService.findUsers(ids, from, size);
     }

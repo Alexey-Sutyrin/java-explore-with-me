@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event.controller; //3
+package ru.practicum.explorewithme.event.controller; //3 - defaultValue fixed
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,7 +38,7 @@ public class EventController {
                                                   @RequestParam(required = false) @DateTimeFormat(pattern = TIME_FORMAT) LocalDateTime rangeEnd,
                                                   @RequestParam(required = false) Boolean onlyAvailable,
                                                   @RequestParam(required = false) String sort,
-                                                  @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                  @RequestParam(defaultValue = "0") Integer from,
                                                   @RequestParam(required = false, defaultValue = "10") Integer size,
                                                   HttpServletRequest request) {
         EventUserParam eventUserParam = new EventUserParam(text, categories, paid, rangeStart, rangeEnd, onlyAvailable,
@@ -73,7 +73,7 @@ public class EventController {
     @GetMapping("/users/{userId}/followers/{followerId}/events")
     public List<EventFullDto> findEventsBySubscriptionOfUser(@PathVariable Long userId,
                                                              @PathVariable Long followerId,
-                                                             @PositiveOrZero @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                             @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                              @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
         return eventService.findEventsBySubscriptionOfUser(userId, followerId, from, size);
     }
@@ -81,7 +81,7 @@ public class EventController {
     @GetMapping("/users/followers/{followerId}/events")
     public List<EventShortDto> findEventsByAllSubscriptions(@PathVariable Long followerId,
                                                             @RequestParam(required = false, defaultValue = "NEW") String sort,
-                                                            @PositiveOrZero @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                            @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                             @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
         return eventService.findEventsByAllSubscriptions(followerId, sort, from, size);
     }
