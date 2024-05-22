@@ -1,14 +1,16 @@
-package ru.practicum.explorewithme.request.dto; //NotEmpty - deleted - a-Data to fix
+package ru.practicum.explorewithme.request.dto; //a-Data
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
