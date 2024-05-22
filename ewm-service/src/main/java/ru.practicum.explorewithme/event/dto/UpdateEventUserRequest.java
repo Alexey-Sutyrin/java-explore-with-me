@@ -1,16 +1,18 @@
-package ru.practicum.explorewithme.event.dto; //a-Data to fix
+package ru.practicum.explorewithme.event.dto; //a-Data
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.practicum.explorewithme.event.model.Location;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class UpdateEventUserRequest {
 
     @Size(min = 20, max = 2000, message = "Длина аннотации должна быть от 20 до 2000.")
@@ -19,7 +21,7 @@ public class UpdateEventUserRequest {
     @Positive
     private Long category;
 
-    @Size(min = 20, max = 7000, message = "Длина полного описания должда быть от 20 до 7000.")
+    @Size(min = 20, max = 7000, message = "Длина полного описания должна быть от 20 до 7000.")
     private String description;
 
     private String eventDate;

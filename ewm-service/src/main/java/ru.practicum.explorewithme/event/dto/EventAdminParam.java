@@ -1,12 +1,16 @@
-package ru.practicum.explorewithme.event.dto; //a-Data to fix
+package ru.practicum.explorewithme.event.dto; //a-Data
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class EventAdminParam {
     private List<Long> users;

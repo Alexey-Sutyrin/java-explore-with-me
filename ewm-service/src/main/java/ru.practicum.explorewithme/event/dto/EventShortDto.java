@@ -1,14 +1,14 @@
-package ru.practicum.explorewithme.event.dto; //a-Data to fix
+package ru.practicum.explorewithme.event.dto; //a-Data
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import ru.practicum.explorewithme.category.dto.CategoryDto;
 import ru.practicum.explorewithme.user.dto.UserShortDto;
 
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventShortDto {
