@@ -29,7 +29,7 @@ public class AdminEventController {
                                                 @RequestParam(required = false) @DateTimeFormat(pattern = TIME_FORMAT) LocalDateTime rangeStart,
                                                 @RequestParam(required = false) @DateTimeFormat(pattern = TIME_FORMAT) LocalDateTime rangeEnd,
                                                 @RequestParam(defaultValue = "0") Integer from,
-                                                @RequestParam(required = false, defaultValue = "10") Integer size) {
+                                                @RequestParam(defaultValue = "10") Integer size) {
         EventAdminParam eventAdminParam = new EventAdminParam(users, states, categories, rangeStart, rangeEnd, from, size);
         return eventService.findEventsByAdmin(eventAdminParam);
     }

@@ -39,7 +39,7 @@ public class EventController {
                                                   @RequestParam(required = false) Boolean onlyAvailable,
                                                   @RequestParam(required = false) String sort,
                                                   @RequestParam(defaultValue = "0") Integer from,
-                                                  @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                  @RequestParam(defaultValue = "10") Integer size,
                                                   HttpServletRequest request) {
         EventUserParam eventUserParam = new EventUserParam(text, categories, paid, rangeStart, rangeEnd, onlyAvailable,
                 sort, from, size);
@@ -74,15 +74,15 @@ public class EventController {
     public List<EventFullDto> findEventsBySubscriptionOfUser(@PathVariable Long userId,
                                                              @PathVariable Long followerId,
                                                              @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
-                                                             @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
+                                                             @Positive @RequestParam(defaultValue = "10") Integer size) {
         return eventService.findEventsBySubscriptionOfUser(userId, followerId, from, size);
     }
 
     @GetMapping("/users/followers/{followerId}/events")
     public List<EventShortDto> findEventsByAllSubscriptions(@PathVariable Long followerId,
-                                                            @RequestParam(required = false, defaultValue = "NEW") String sort,
+                                                            @RequestParam(defaultValue = "NEW") String sort,
                                                             @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
-                                                            @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
+                                                            @Positive @RequestParam(defaultValue = "10") Integer size) {
         return eventService.findEventsByAllSubscriptions(followerId, sort, from, size);
     }
 }

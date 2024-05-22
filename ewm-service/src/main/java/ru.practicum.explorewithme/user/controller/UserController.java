@@ -26,7 +26,7 @@ public class UserController {
     @GetMapping("/admin/users")
     public List<UserOutDto> findUsers(@RequestParam(required = false) List<Long> ids,
                                       @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
-                                      @Positive @RequestParam(required = false, defaultValue = "10") Integer size) {
+                                      @Positive @RequestParam(defaultValue = "10") Integer size) {
         return userService.findUsers(ids, from, size);
     }
 
