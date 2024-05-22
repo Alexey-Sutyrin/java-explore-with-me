@@ -1,17 +1,17 @@
-package ru.practicum.explorewithme.event.dto; //a-Data
+package ru.practicum.explorewithme.event.dto; //a-Data to fix
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.practicum.explorewithme.category.dto.CategoryDto;
 import ru.practicum.explorewithme.event.model.Location;
 import ru.practicum.explorewithme.user.dto.UserShortDto;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class EventFullDto {
 
     private String annotation;
