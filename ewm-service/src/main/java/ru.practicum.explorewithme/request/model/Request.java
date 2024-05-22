@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.request.model;
+package ru.practicum.explorewithme.request.model; //a-Data
 
 import lombok.*;
 import ru.practicum.explorewithme.event.model.Event;
@@ -7,7 +7,8 @@ import ru.practicum.explorewithme.user.model.User;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @AllArgsConstructor

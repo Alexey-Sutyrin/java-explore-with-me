@@ -1,13 +1,16 @@
-package ru.practicum.explorewithme.event.dto;
+package ru.practicum.explorewithme.event.dto; //a-Data
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
 import ru.practicum.explorewithme.category.dto.CategoryDto;
 import ru.practicum.explorewithme.user.dto.UserShortDto;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

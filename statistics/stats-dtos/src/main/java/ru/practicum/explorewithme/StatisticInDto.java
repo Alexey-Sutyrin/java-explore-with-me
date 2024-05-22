@@ -1,25 +1,32 @@
-package ru.practicum.explorewithme;
+package ru.practicum.explorewithme; //a-Data fixed
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class StatisticInDto {
 
     @NotEmpty(message = "Название приложения не может быть пустым")
     private String app;
-    @NotEmpty(message = "URI не может быть путсым")
+
+    @NotEmpty(message = "URI не может быть пустым")
     private String uri;
+
     @NotEmpty(message = "Необходимо указать IP пользователя")
     private String ip;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "Необходимо указать время отправления запроса")
     private LocalDateTime timestamp;

@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event.service;
+package ru.practicum.explorewithme.event.service; //3 - long methods split up
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -91,102 +91,80 @@ public class EventServiceImpl implements EventService {
     @Transactional
     @Override
     public EventFullDto userUpdateEvent(Long userId, Long eventId, UpdateEventUserRequest eventUpdate) {
-        Event updated;
-        Map<Long, Long> views;
-        Category category;
-        User user = userService.findUserById(userId);
         Event oldEvent = findEventByIdAndInitiatorId(userId, eventId);
+        validateUserUpdateEvent(oldEvent);
 
-        if (oldEvent.getState().equals(EventState.PUBLISHED)) {
+        updateEventFields(oldEvent, eventUpdate);
+
+        Event updated = eventRepository.save(oldEvent);
+        Map<Long, Long> views = eventStatService.getEventsViews(List.of(eventId));
+        log.info("Событие с id {} пользователя с id {} обновлено", eventId, userId);
+        return EventMapper.toEventFullDtoWithViews(updated, views);
+    }
+
+    private void validateUserUpdateEvent(Event event) {
+        if (event.getState().equals(EventState.PUBLISHED)) {
             throw new DataConflictException("Изменить можно только отмененные события или события в состоянии " +
                     "ожидания модерации");
         }
+    }
+
+    @Transactional
+    @Override
+    public EventFullDto adminUpdateEvent(Long eventId, UpdateEventAdminRequest eventUpdate) {
+        Event oldEvent = findEventById(eventId);
+        validateAdminUpdateEvent(eventUpdate);
+
+        updateEventFields(oldEvent, eventUpdate);
+
+        Event updated = eventRepository.save(oldEvent);
+        Map<Long, Long> views = eventStatService.getEventsViews(List.of(eventId));
+        log.info("Событие с id {} обновлено администратором", eventId);
+        return EventMapper.toEventFullDtoWithViews(updated, views);
+    }
+
+    private void validateAdminUpdateEvent(UpdateEventAdminRequest eventUpdate) {
+        if (eventUpdate.getEventDate() != null) {
+            LocalDateTime updateTime = LocalDateTime.parse(eventUpdate.getEventDate(), FORMATTER);
+            validateEventTimeByAdmin(updateTime);
+        }
+    }
+
+    private void updateEventFields(Event event, UpdateEventUserRequest eventUpdate) {
         if (eventUpdate.getEventDate() != null) {
             LocalDateTime updateEventTime = LocalDateTime.parse(eventUpdate.getEventDate(), FORMATTER);
             validateEventTimeByUser(updateEventTime);
         }
         if (eventUpdate.getStateAction() != null) {
-            updateEventByUserStateAction(oldEvent, eventUpdate);
+            updateEventByUserStateAction(event, eventUpdate);
         }
         if (eventUpdate.getAnnotation() != null) {
-            oldEvent.setAnnotation(eventUpdate.getAnnotation());
+            event.setAnnotation(eventUpdate.getAnnotation());
         }
         if (eventUpdate.getCategory() != null) {
-            category = categoryService.findCategory(eventUpdate.getCategory());
-            oldEvent.setCategory(category);
+            Category category = categoryService.findCategory(eventUpdate.getCategory());
+            event.setCategory(category);
         }
         if (eventUpdate.getDescription() != null) {
-            oldEvent.setDescription(eventUpdate.getDescription());
+            event.setDescription(eventUpdate.getDescription());
         }
         if (eventUpdate.getLocation() != null) {
-            oldEvent.setLat(eventUpdate.getLocation().getLat());
-            oldEvent.setLon(eventUpdate.getLocation().getLon());
+            event.setLat(eventUpdate.getLocation().getLat());
+            event.setLon(eventUpdate.getLocation().getLon());
         }
         if (eventUpdate.getPaid() != null) {
-            oldEvent.setIsPaid(eventUpdate.getPaid());
+            event.setIsPaid(eventUpdate.getPaid());
         }
         if (eventUpdate.getParticipantLimit() != null) {
             validateLimit(eventUpdate.getParticipantLimit());
-            oldEvent.setParticipantLimit(eventUpdate.getParticipantLimit());
+            event.setParticipantLimit(eventUpdate.getParticipantLimit());
         }
         if (eventUpdate.getRequestModeration() != null) {
-            oldEvent.setRequestModeration(eventUpdate.getRequestModeration());
+            event.setRequestModeration(eventUpdate.getRequestModeration());
         }
         if (eventUpdate.getTitle() != null) {
-            oldEvent.setTitle(eventUpdate.getTitle());
+            event.setTitle(eventUpdate.getTitle());
         }
-        updated = eventRepository.save(oldEvent);
-        views = eventStatService.getEventsViews(List.of(eventId));
-        log.info("Событие с id {} пользователя с id {} обновлено", eventId, userId);
-        return EventMapper.toEventFullDtoWithViews(updated, views);
-    }
-
-    @Override
-    @Transactional
-    public EventFullDto adminUpdateEvent(Long eventId, UpdateEventAdminRequest eventUpdate) {
-        Event updated;
-        Map<Long, Long> views;
-        Category category;
-        Event oldEvent = findEventById(eventId);
-
-        if (eventUpdate.getEventDate() != null) {
-            LocalDateTime updateTime = LocalDateTime.parse(eventUpdate.getEventDate(), FORMATTER);
-            validateEventTimeByAdmin(updateTime);
-        }
-        if (eventUpdate.getStateAction() != null) {
-            validateEventState(oldEvent.getState());
-            updateEventByAdminStateAction(oldEvent, eventUpdate);
-        }
-        if (eventUpdate.getAnnotation() != null) {
-            oldEvent.setAnnotation(eventUpdate.getAnnotation());
-        }
-        if (eventUpdate.getCategory() != null) {
-            category = categoryService.findCategory(eventUpdate.getCategory());
-            oldEvent.setCategory(category);
-        }
-        if (eventUpdate.getDescription() != null) {
-            oldEvent.setDescription(eventUpdate.getDescription());
-        }
-        if (eventUpdate.getLocation() != null) {
-            oldEvent.setLat(eventUpdate.getLocation().getLat());
-            oldEvent.setLon(eventUpdate.getLocation().getLon());
-        }
-        if (eventUpdate.getPaid() != null) {
-            oldEvent.setIsPaid(eventUpdate.getPaid());
-        }
-        if (eventUpdate.getParticipantLimit() != null) {
-            oldEvent.setParticipantLimit(eventUpdate.getParticipantLimit());
-        }
-        if (eventUpdate.getRequestModeration() != null) {
-            oldEvent.setRequestModeration(eventUpdate.getRequestModeration());
-        }
-        if (eventUpdate.getTitle() != null) {
-            oldEvent.setTitle(eventUpdate.getTitle());
-        }
-        updated = eventRepository.save(oldEvent);
-        views = eventStatService.getEventsViews(List.of(eventId));
-        log.info("Событие с id {} обновлено администратором", eventId);
-        return EventMapper.toEventFullDtoWithViews(updated, views);
     }
 
     @Override
@@ -355,6 +333,47 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findAllByIdIn(ids);
     }
 
+    @Override
+    public List<EventFullDto> findEventsBySubscriptionOfUser(Long userId, Long followerId, Integer from, Integer size) {
+        Map<Long, Long> views;
+        Pageable pageable = PageRequest.of(from / size, size);
+        if (userId.equals(followerId)) {
+            throw new DataConflictException("Пользователь не может быть подписан на себя");
+        }
+        User user = userService.findUserById(userId);
+        User follower = userService.findUserById(followerId);
+        if (!user.getFollowers().contains(follower)) {
+            throw new InvalidRequestException("Пользователь с id " + followerId + " не подписан на пользователя с id " +
+                    userId);
+        }
+        List<Event> events = eventRepository.findByInitiatorIdAndState(userId, EventState.PUBLISHED, pageable);
+        views = eventStatService.getEventsViews(events.stream().map(Event::getId).collect(Collectors.toList()));
+        log.info("Найдены события пользователя id {} для подписчика id {}", userId, followerId);
+        return EventMapper.toFullDtos(events, views);
+    }
+
+    @Override
+    public List<EventShortDto> findEventsByAllSubscriptions(Long followerId, String sort, Integer from, Integer size) {
+        Map<Long, Long> views;
+        Pageable pageable;
+        SubscriptionSort subSort = SubscriptionSort.valueOf(sort);
+        if (subSort == SubscriptionSort.NEW) {
+            pageable = PageRequest.of(from / size, size, Sort.by("eventDate").descending());
+        } else {
+            pageable = PageRequest.of(from / size, size, Sort.by("eventDate"));
+        }
+
+        User follower = userService.findUserById(followerId);
+        if (follower.getFollowees().isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<Long> folowees = follower.getFollowees().stream().map(User::getId).collect(Collectors.toList());
+        List<Event> events = eventRepository.findByStateAndInitiatorIdIn(EventState.PUBLISHED, folowees, pageable);
+        views = eventStatService.getEventsViews(events.stream().map(Event::getId).collect(Collectors.toList()));
+        log.info("Найдены события по подпискам пользователя с id {}", followerId);
+        return EventMapper.toShortDtos(events, views);
+    }
+
     private Sort getEventSort(String eventSort) {
         EventSort sort;
         if (eventSort == null) {
@@ -487,5 +506,43 @@ public class EventServiceImpl implements EventService {
             throw new InvalidRequestException("Неизвестный параметр состояния события");
         }
         return eventStates;
+    }
+
+
+    private void updateEventFields(Event event, UpdateEventAdminRequest eventUpdate) {
+        if (eventUpdate.getEventDate() != null) {
+            LocalDateTime updateTime = LocalDateTime.parse(eventUpdate.getEventDate(), FORMATTER);
+            validateEventTimeByAdmin(updateTime);
+        }
+        if (eventUpdate.getStateAction() != null) {
+            validateEventState(event.getState());
+            updateEventByAdminStateAction(event, eventUpdate);
+        }
+        if (eventUpdate.getAnnotation() != null) {
+            event.setAnnotation(eventUpdate.getAnnotation());
+        }
+        if (eventUpdate.getCategory() != null) {
+            Category category = categoryService.findCategory(eventUpdate.getCategory());
+            event.setCategory(category);
+        }
+        if (eventUpdate.getDescription() != null) {
+            event.setDescription(eventUpdate.getDescription());
+        }
+        if (eventUpdate.getLocation() != null) {
+            event.setLat(eventUpdate.getLocation().getLat());
+            event.setLon(eventUpdate.getLocation().getLon());
+        }
+        if (eventUpdate.getPaid() != null) {
+            event.setIsPaid(eventUpdate.getPaid());
+        }
+        if (eventUpdate.getParticipantLimit() != null) {
+            event.setParticipantLimit(eventUpdate.getParticipantLimit());
+        }
+        if (eventUpdate.getRequestModeration() != null) {
+            event.setRequestModeration(eventUpdate.getRequestModeration());
+        }
+        if (eventUpdate.getTitle() != null) {
+            event.setTitle(eventUpdate.getTitle());
+        }
     }
 }

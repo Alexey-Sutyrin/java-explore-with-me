@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event.model; //3 stage
+package ru.practicum.explorewithme.event.model; //3 stage - new
 
 public enum SubscriptionSort {
 

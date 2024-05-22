@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.compilation.controller;
+package ru.practicum.explorewithme.compilation.controller; //defaultValue fixed
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,9 +19,9 @@ public class CompilationController {
 
     //Public endpoints
     @GetMapping("/compilations")
-    public List<CompilationDto> findCompilations(@RequestParam(required = false, defaultValue = "false") String pinned,
-                                                 @RequestParam(required = false, defaultValue = "0") Integer from,
-                                                 @RequestParam(required = false, defaultValue = "10") Integer size) {
+    public List<CompilationDto> findCompilations(@RequestParam(defaultValue = "false") String pinned,
+                                                 @RequestParam(defaultValue = "0") Integer from,
+                                                 @RequestParam(defaultValue = "10") Integer size) {
         return compService.findCompilations(Boolean.valueOf(pinned), from, size);
     }
 

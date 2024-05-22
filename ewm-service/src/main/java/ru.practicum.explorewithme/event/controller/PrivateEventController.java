@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event.controller; //Private endpoints
+package ru.practicum.explorewithme.event.controller; //3 - defaultValue fixed
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,8 +27,8 @@ public class PrivateEventController {
 
     @GetMapping("/users/{userId}/events")
     public List<EventShortDto> findEventsOfUser(@PathVariable Long userId,
-                                                @RequestParam(required = false, defaultValue = "0") Integer from,
-                                                @RequestParam(required = false, defaultValue = "10") Integer size) {
+                                                @RequestParam(defaultValue = "0") Integer from,
+                                                @RequestParam(defaultValue = "10") Integer size) {
         return eventService.findEventsOfUser(userId, from, size);
     }
 
@@ -44,4 +44,3 @@ public class PrivateEventController {
         return eventService.userUpdateEvent(userId, eventId, updateEventUserRequest);
     }
 }
-

@@ -1,8 +1,9 @@
-package ru.practicum.explorewithme.event.dto;
+package ru.practicum.explorewithme.event.dto; //a-Data
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.practicum.explorewithme.event.model.Location;
 
 import javax.validation.constraints.NotNull;
@@ -10,9 +11,10 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class NewEventDto {
 
     @NotNull
@@ -24,7 +26,7 @@ public class NewEventDto {
     private Long category;
 
     @NotNull
-    @Size(min = 20, max = 7000, message = "Длина полного описания должда быть от 20 до 7000.")
+    @Size(min = 20, max = 7000, message = "Длина полного описания должна быть от 20 до 7000.")
     private String description;
 
     @NotNull

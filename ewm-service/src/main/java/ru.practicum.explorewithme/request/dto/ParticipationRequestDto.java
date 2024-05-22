@@ -1,15 +1,16 @@
-package ru.practicum.explorewithme.request.dto;
+package ru.practicum.explorewithme.request.dto; //a-Data
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +23,6 @@ public class ParticipationRequestDto {
     private Long event;
     @NotNull
     private Long requester;
-    @NotEmpty
     @NotBlank
     private String status;
 }

@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event.controller; //Public endpoints
+package ru.practicum.explorewithme.event.controller; //3 - defaultValue fixed
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +14,8 @@ import ru.practicum.explorewithme.request.dto.ParticipationRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,12 +25,11 @@ import static ru.practicum.explorewithme.constant.Constant.TIME_FORMAT;
 @Validated
 @RestController
 @RequiredArgsConstructor
-public class PublicEventController {
+public class EventController {
 
     private final EventService eventService;
     private final StatisticClient statisticClient;
 
-    //Public endpoints
     @GetMapping("/events")
     public List<EventShortDto> findEventsByPublic(@RequestParam(required = false) String text,
                                                   @RequestParam(required = false) List<Long> categories,
@@ -37,8 +38,8 @@ public class PublicEventController {
                                                   @RequestParam(required = false) @DateTimeFormat(pattern = TIME_FORMAT) LocalDateTime rangeEnd,
                                                   @RequestParam(required = false) Boolean onlyAvailable,
                                                   @RequestParam(required = false) String sort,
-                                                  @RequestParam(required = false, defaultValue = "0") Integer from,
-                                                  @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                  @RequestParam(defaultValue = "0") Integer from,
+                                                  @RequestParam(defaultValue = "10") Integer size,
                                                   HttpServletRequest request) {
         EventUserParam eventUserParam = new EventUserParam(text, categories, paid, rangeStart, rangeEnd, onlyAvailable,
                 sort, from, size);
@@ -68,5 +69,20 @@ public class PublicEventController {
                                                                     @Valid @RequestBody EventRequestStatusUpdateRequest updateRequest) {
         return eventService.changeEventRequestsStatus(userId, eventId, updateRequest);
     }
-}
 
+    @GetMapping("/users/{userId}/followers/{followerId}/events")
+    public List<EventFullDto> findEventsBySubscriptionOfUser(@PathVariable Long userId,
+                                                             @PathVariable Long followerId,
+                                                             @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+                                                             @Positive @RequestParam(defaultValue = "10") Integer size) {
+        return eventService.findEventsBySubscriptionOfUser(userId, followerId, from, size);
+    }
+
+    @GetMapping("/users/followers/{followerId}/events")
+    public List<EventShortDto> findEventsByAllSubscriptions(@PathVariable Long followerId,
+                                                            @RequestParam(defaultValue = "NEW") String sort,
+                                                            @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+                                                            @Positive @RequestParam(defaultValue = "10") Integer size) {
+        return eventService.findEventsByAllSubscriptions(followerId, sort, from, size);
+    }
+}

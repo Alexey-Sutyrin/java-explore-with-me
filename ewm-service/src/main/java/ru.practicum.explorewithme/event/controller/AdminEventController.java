@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.event.controller; //Admin endpoints
+package ru.practicum.explorewithme.event.controller; //3 - defaultValue fixed
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,8 +28,8 @@ public class AdminEventController {
                                                 @RequestParam(required = false) List<Long> categories,
                                                 @RequestParam(required = false) @DateTimeFormat(pattern = TIME_FORMAT) LocalDateTime rangeStart,
                                                 @RequestParam(required = false) @DateTimeFormat(pattern = TIME_FORMAT) LocalDateTime rangeEnd,
-                                                @RequestParam(required = false, defaultValue = "0") Integer from,
-                                                @RequestParam(required = false, defaultValue = "10") Integer size) {
+                                                @RequestParam(defaultValue = "0") Integer from,
+                                                @RequestParam(defaultValue = "10") Integer size) {
         EventAdminParam eventAdminParam = new EventAdminParam(users, states, categories, rangeStart, rangeEnd, from, size);
         return eventService.findEventsByAdmin(eventAdminParam);
     }
@@ -40,4 +40,3 @@ public class AdminEventController {
         return eventService.adminUpdateEvent(eventId, updateRequest);
     }
 }
-
