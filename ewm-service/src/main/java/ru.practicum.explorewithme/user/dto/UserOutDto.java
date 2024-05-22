@@ -1,11 +1,13 @@
-package ru.practicum.explorewithme.user.dto; //a-Data to fix
+package ru.practicum.explorewithme.user.dto; //a-Data
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
